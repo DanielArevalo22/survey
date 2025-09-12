@@ -1,17 +1,41 @@
-<div class="bg-amber-200 hover:bg-[#0457cc] hover:text-white hover:transition duration-400
-     rounded-full w-[50px] h-[50px] flex items-center justify-center ms-2 mt-2">
-<a aria-label="Ir a la siguiente página mt-3">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="28" height="28" viewBox="0 0 24 24"
-    fill="none" stroke="currentColor" stroke-width="2"
-    stroke-linecap="round" stroke-linejoin="round"
-    aria-hidden="true" focusable="false"
-    style="vertical-align:middle"
-  >
-    <path d="M3 12h14" />
-    <path d="M13 5l7 7-7 7" />
-  </svg>
-</a>
+<div class="flex items-center space-x-4 mt-2">
+  <!-- Flecha izquierda -->
+  <div class="bg-amber-200 hover:bg-[#0457cc] hover:text-white transition duration-400
+              rounded-full w-[40px] h-[40px] flex items-center justify-center">
+    <a aria-label="Página anterior">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28" height="28" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"
+        aria-hidden="true" focusable="false"
+      >
+        <path d="M21 12H7" />
+        <path d="M11 19l-7-7 7-7" />
+      </svg>
+    </a>
+  </div>
 
+  <!-- Botón página (número o actual) -->
+  <div class="bg-amber-200 hover:bg-[#0457cc] hover:text-white transition duration-400
+              rounded-full w-[40px] h-[40px] flex items-center justify-center text-lg font-semibold">
+    <a aria-label="Página actual">1</a>
+  </div>
+
+  <!-- Flecha derecha -->
+  <div class="bg-amber-200 hover:bg-[#0457cc] hover:text-white transition duration-400
+              rounded-full w-[40px] h-[40px] flex items-center justify-center">
+    <a aria-label="Página siguiente">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="28" height="28" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round"
+        aria-hidden="true" focusable="false"
+      >
+        <path d="M3 12h14" />
+        <path d="M13 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
 </div>
