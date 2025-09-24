@@ -1,12 +1,29 @@
-<div class="w-[400px] bg-amber-300 mx-auto mb-2">
-    <p class="text-[30px] font-thin text-center pt-4">Hello, userName</p>
+<div class="w-[400px] bg-[#efeaea] rounded mx-auto mb-2">
+    <p class="text-[30px] font-thin text-center pt-2">Hello, {{ this.survey }}</p>
     <!--PRINCIPAL QUESTION-->
     <div class="text-center font-semibold mt-5">
-        <h1>PP 1</h1>
-        <div class="font-light mt-3">
-            <ul class="flex justify-center content-center">
+            <h1> {{ principalQ }}</h1>
+        <div class="font-light mt-3 pb-2">
+            <ul class="flex justify-center content-center space-x-0.5 text-white">
                 <!--FOR GOES HERE!-->
-                <li class="flex items-center justify-center w-[35px] h-[35px] bg-amber-800">a</li>
+                @for(i of numeros; track $index){
+                   @if (i >= 1 && i <= 3) {
+                        <li class="flex items-center justify-center w-[35px] h-[35px] bg-red-500 text-white rounded-full
+                        hover:bg-red-600 transition duration-500 cursor-pointer">{{ i }}</li>
+                    }
+                    @else if (i >= 4 && i <= 6) {
+                        <li class="flex items-center justify-center w-[35px] h-[35px] bg-orange-600 text-white rounded-full
+                        cursor-pointer hover:bg-orange-700 transition duration-500">{{ i }}</li>
+                    }
+                    @else if (i >= 7 && i <= 8) {
+                        <li class="flex items-center justify-center w-[35px] h-[35px] bg-green-500 text-white rounded-full
+                        cursor-pointer hover:bg-green-600 transition duration-500">{{ i }}</li>
+                    }
+                    @else {
+                        <li class="flex items-center justify-center w-[35px] h-[35px] bg-green-600 text-white rounded-full
+                        cursor-pointer hover:bg-green-900 transition duration-500">{{ i }}</li>
+                    }
+                }
             </ul>
         </div>
     </div>

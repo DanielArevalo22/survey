@@ -1,8 +1,53 @@
 <div class="w-[500px] h-[500px] rounded-xl mx-auto mt-[50px] shadow flex flex-col">
-    <app-principal-question></app-principal-question>
-    <app-comp-questions></app-comp-questions>
-    <!-- "NEXT" BUTTON -->
-    <div class="w-[500px] flex space-x-3 justify-center mt-auto mb-2">
-        <app-button class="mb-2"></app-button>
+  @if (survey.sections.length > 0) {
+    @let section = survey.sections[currentIndex];
+
+    <app-principal-question class="mt-1"
+      [section]="section" 
+      [survey]="survey.nameParticipant">
+    </app-principal-question>
+
+    <app-comp-questions 
+      [section]="section">
+    </app-comp-questions>
+  }
+
+  <!-- Navegación -->
+  <div class="w-[500px] flex space-x-3 justify-center mt-auto mb-2">
+    <div class="flex items-center space-x-4 mt-2">
+
+      <!-- Flecha izquierda -->
+      <div class="bg-amber-200 hover:bg-[#0457cc] hover:text-white transition duration-400
+                  rounded-full w-[40px] h-[40px] flex items-center justify-center"
+           (click)="prevQuestion()">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="28" height="28" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12H7" />
+          <path d="M11 19l-7-7 7-7" />
+        </svg>
+      </div>
+
+      <!-- Página actual -->
+      <div class="bg-amber-200 hover:bg-[#0457cc] hover:text-white transition duration-400
+                  rounded-full w-[40px] h-[40px] flex items-center justify-center text-lg font-semibold">
+        {{ currentIndex + 1 }}
+      </div>
+
+      <!-- Flecha derecha -->
+      <div class="bg-amber-200 hover:bg-[#0457cc] hover:text-white transition duration-400
+                  rounded-full w-[40px] h-[40px] flex items-center justify-center"
+           (click)="nextQuestion()">
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="28" height="28" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12h14" />
+          <path d="M13 5l7 7-7 7" />
+        </svg>
+      </div>
+
     </div>
+  </div>
 </div>
