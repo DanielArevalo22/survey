@@ -1,60 +1,107 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ButtonComponent } from "./components/button/button.component";
 import { CompQuestionsComponent } from "./components/comp-questions/comp-questions.component";
 import { PrincipalQuestionComponent } from "./components/principal-question/principal-question.component";
 import { Survey } from './models/Survey';
 import { SurveyService } from './services/survey.service';
+import { Scores } from './models/Scores';
 
 @Component({
   selector: 'app-root',
-  imports: [ PrincipalQuestionComponent, CompQuestionsComponent],
+  imports: [PrincipalQuestionComponent, CompQuestionsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'survey';
-  currentIndex : number = 0;
-  survey : Survey = {
-      idSurvey : 0,
-      survey : '',
-      sections : [],
-      nameParticipant : '',
-      idParticipant : ''
-  }
+  i: number = 0
+  currentIndex: number = 0;
+  survey!: Survey;
+  scoreBody!: Scores;
+  private compIndexMap: { [sectionId: number]: number } = {};
 
+  constructor(private surveyService: SurveyService) { }
 
-  constructor(private surveyService : SurveyService){}
-
-  ngOnInit() : void{
+  ngOnInit(): void {
     this.loadSurvey();
   }
 
-  
-  public loadSurvey(){
+
+  public loadSurvey() {
     this.surveyService.getSurvey('shop').subscribe({
       next: (resp) => {
         this.survey = resp.data;
+        this.buildScoreBody();
       },
-      error : (err) => {
+      error: (err) => {
         return err;
       }
     })
   }
 
-    nextQuestion() {
-      if (this.currentIndex < this.survey.sections.length - 1) {
-        this.currentIndex++;
-        console.log(this.currentIndex);
-        console.log('SAPE');
-      }
+  nextQuestion() {
+    if (this.currentIndex < this.survey.sections.length - 1) {
+      this.currentIndex++;
+    }
+  }
+
+  prevQuestion() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+    }
+  }
+
+  buildScoreBody(): void {
+    this.scoreBody = {
+      idSurvey: this.survey.idSurvey,
+      nameParticipant: this.survey.nameParticipant,
+      idParticipant: this.survey.idParticipant,
+      section: this.survey.sections.map(section => ({
+        idSection: section.idSection,
+        questions: section.questions.map(q => ({
+          idQuestion: q.idQuestion,
+          question: q.question,
+          isPrincipal: q.isPrincipal,
+          score: 0
+        }))
+      }))
+    };
+  }
+
+  sendSurvey() {
+    const payload = this.scoreBody;
+    
+    //LLAMAR A LA API
+  }
+
+  getScorePrincipal(score: number): void {
+    console.log('score principal ---> ', score);
+    const currentSectionScore = this.scoreBody.section[this.currentIndex];
+    const principalQuestion = currentSectionScore.questions.find(q => q.isPrincipal === 'Y');
+    if (principalQuestion) {
+      principalQuestion.score = score;
+    }
+  }
+
+  getScoreComp(score: number): void {
+    const currentSection = this.scoreBody.section[this.currentIndex];
+    const sectionId = currentSection.idSection;
+    const complementarias = currentSection.questions.filter(q => q.isPrincipal !== 'Y');
+    
+    if (this.compIndexMap[sectionId] === undefined) {
+      this.compIndexMap[sectionId] = 0;
     }
 
-    prevQuestion() {
-      if (this.currentIndex > 0) {
-        this.currentIndex--;
-        console.log(this.currentIndex);
-        console.log('Retrocediendo sección');
-      }
+    const index = this.compIndexMap[sectionId];
+
+    if (index < complementarias.length) {
+      complementarias[index].score = score;
+      this.compIndexMap[sectionId]++;
+    } else {
+      console.warn(`Ya se asignaron todos los scores en sección ${sectionId}`);
     }
+  }
+
+
+
+
 }
