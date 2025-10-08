@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Question } from '../../models/Question';
 import { Section } from '../../models/Section';
 
@@ -14,6 +14,8 @@ export class PrincipalQuestionComponent {
   section! : Section
   @Input()
   survey! : string
+  @Output()
+  score = new EventEmitter<number>();
   question : Question[] = [];
   principalQ : string = '';
   numeros: number[] = [];
@@ -41,5 +43,9 @@ export class PrincipalQuestionComponent {
       }
     }
     return '';
+  }
+
+  captureScore(i : number){
+    this.score.emit(i);
   }
 }

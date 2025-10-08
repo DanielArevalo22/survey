@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
 import { Section } from '../../models/Section';
 import { Question } from '../../models/Question';
 
@@ -13,6 +13,8 @@ export class CompQuestionsComponent {
 
   @Input()
   section! : Section;
+  @Output()
+  score = new EventEmitter<number>();
   question : Question[] = [];
   questionsComplementary : string[] = [];
 
@@ -26,5 +28,9 @@ export class CompQuestionsComponent {
     this.questionsComplementary = this.section.questions
       .filter(q => q.isPrincipal === 'N')
       .map(q => q.question);
+  }
+
+  getScore(i : number){
+    this.score.emit(i);
   }
 }
