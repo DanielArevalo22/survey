@@ -55,7 +55,7 @@ export class AppComponent {
       idSurvey: this.survey.idSurvey,
       nameParticipant: this.survey.nameParticipant,
       idParticipant: this.survey.idParticipant,
-      section: this.survey.sections.map(section => ({
+      sections: this.survey.sections.map(section => ({
         idSection: section.idSection,
         questions: section.questions.map(q => ({
           idQuestion: q.idQuestion,
@@ -69,13 +69,18 @@ export class AppComponent {
 
   sendSurvey() {
     const payload = this.scoreBody;
-    
-    //LLAMAR A LA API
+    this.surveyService.postSurvey(payload).subscribe({
+      next: (res) => {
+        console.log('Status survey ---> ', res);
+      },
+      error : (error) => {
+        console.log('Error saving survey --> ', error);
+      }
+    });
   }
 
   getScorePrincipal(score: number): void {
-    console.log('score principal ---> ', score);
-    const currentSectionScore = this.scoreBody.section[this.currentIndex];
+    const currentSectionScore = this.scoreBody.sections[this.currentIndex];
     const principalQuestion = currentSectionScore.questions.find(q => q.isPrincipal === 'Y');
     if (principalQuestion) {
       principalQuestion.score = score;
@@ -83,7 +88,7 @@ export class AppComponent {
   }
 
   getScoreComp(score: number): void {
-    const currentSection = this.scoreBody.section[this.currentIndex];
+    const currentSection = this.scoreBody.sections[this.currentIndex];
     const sectionId = currentSection.idSection;
     const complementarias = currentSection.questions.filter(q => q.isPrincipal !== 'Y');
     
