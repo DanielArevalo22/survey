@@ -1,18 +1,71 @@
-<div class=" w-[400px] mx-auto">
+<div class="w-[400px] mx-auto">
     <p>Complementaries</p>
-    <!--FOR GOES HERE!-->
     <div class="ms-5 mt-5">
         @for(questionC of questionsComplementary; track $index){
-            <span class="me-5">{{ questionC }}</span>
-            <div class="mt-2.5">
-                <ul class="flex space-x-4 justify-center pb-2 text-white">
-                    <li class="w-[30px] h-[30px] rounded-full bg-[#f00000] hover:bg-[#c90000] flex justify-center items-center text-center cursor-pointer" (click)="getScore(1)">1</li>
-                    <li class="w-[30px] h-[30px] rounded-full bg-[#ff2b2b] hover:bg-[#d42323] flex justify-center items-center text-center cursor-pointer" (click)="getScore(2)">2</li>
-                    <li class="w-[30px] h-[30px] rounded-full bg-[#f4fc03] hover:bg-[#d6e003] flex justify-center items-center text-center cursor-pointer" (click)="getScore(3)">3</li>
-                    <li class="w-[30px] h-[30px] rounded-full bg-[#04bf07] hover:bg-[#039604] flex justify-center items-center text-center cursor-pointer" (click)="getScore(4)">4</li>
-                    <li class="w-[30px] h-[30px] rounded-full bg-[#148f16] hover:bg-[#0f6f11] flex justify-center items-center text-center cursor-pointer" (click)="getScore(5)">5</li>
-                </ul>
-            </div>
+        <span class="me-5">{{ questionC }}</span>
+        <div class="mt-2.5">
+            <ul class="flex space-x-4 justify-center pb-2 text-white">
+                <li class="w-[30px] h-[30px] rounded-full flex justify-center items-center text-center transition duration-500"
+                    [class.bg-[#f00000]]="selectedScores[$index] !== 1"
+                    [class.hover:bg-[#c90000]]="selectedScores[$index] !== 1"
+                    [class.bg-[#8b0000]]="selectedScores[$index] === 1"
+                    [class.ring-4]="selectedScores[$index] === 1"
+                    [class.ring-red-300]="selectedScores[$index] === 1"
+                    [class.scale-125]="selectedScores[$index] === 1"
+                    [class.cursor-pointer]="selectedScores[$index] !== 1"
+                    (click)="getScore($index, 1)">
+                    1
+                </li>
+
+                <li class="w-[30px] h-[30px] rounded-full flex justify-center items-center text-center transition duration-500"
+                    [class.bg-[#ff2b2b]]="selectedScores[$index] !== 2"
+                    [class.hover:bg-[#d42323]]="selectedScores[$index] !== 2"
+                    [class.bg-[#a01818]]="selectedScores[$index] === 2"
+                    [class.ring-4]="selectedScores[$index] === 2"
+                    [class.ring-red-300]="selectedScores[$index] === 2"
+                    [class.scale-125]="selectedScores[$index] === 2"
+                    [class.cursor-pointer]="selectedScores[$index] !== 2"
+                    (click)="getScore($index, 2)">
+                    2
+                </li>
+
+                <li class="w-[30px] h-[30px] rounded-full flex justify-center items-center text-center transition duration-500"
+                    [class.bg-[#f4fc03]]="selectedScores[$index] !== 3"
+                    [class.hover:bg-[#d6e003]]="selectedScores[$index] !== 3"
+                    [class.bg-[#b8bc02]]="selectedScores[$index] === 3"
+                    [class.ring-4]="selectedScores[$index] === 3"
+                    [class.ring-yellow-300]="selectedScores[$index] === 3"
+                    [class.scale-125]="selectedScores[$index] === 3"
+                    [class.cursor-pointer]="selectedScores[$index] !== 3"
+                    (click)="getScore($index, 3)">
+                    3
+                </li>
+
+                <li class="w-[30px] h-[30px] rounded-full flex justify-center items-center text-center transition duration-500"
+                    [class.bg-[#04bf07]]="selectedScores[$index] !== 4"
+                    [class.hover:bg-[#039604]]="selectedScores[$index] !== 4"
+                    [class.bg-[#026f03]]="selectedScores[$index] === 4"
+                    [class.ring-4]="selectedScores[$index] === 4"
+                    [class.ring-green-300]="selectedScores[$index] === 4"
+                    [class.scale-125]="selectedScores[$index] === 4"
+                    [class.cursor-pointer]="selectedScores[$index] !== 4"
+                    (click)="getScore($index, 4)">
+                    4
+                </li>
+
+                <li class="w-[30px] h-[30px] rounded-full flex justify-center items-center text-center transition duration-500"
+                    [class.bg-[#148f16]]="selectedScores[$index] !== 5"
+                    [class.hover:bg-[#0f6f11]]="selectedScores[$index] !== 5"
+                    [class.bg-[#0a4f0b]]="selectedScores[$index] === 5"
+                    [class.ring-4]="selectedScores[$index] === 5"
+                    [class.ring-green-400]="selectedScores[$index] === 5"
+                    [class.scale-125]="selectedScores[$index] === 5"
+                    [class.cursor-pointer]="selectedScores[$index] !== 5"
+                    (click)="getScore($index, 5)">
+                    5
+                </li>
+            </ul>
+        </div>
         }
     </div>
 </div>

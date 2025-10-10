@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Section } from '../../models/Section';
 import { Question } from '../../models/Question';
 
@@ -12,25 +12,35 @@ import { Question } from '../../models/Question';
 export class CompQuestionsComponent {
 
   @Input()
-  section! : Section;
+  section!: Section;
   @Output()
   score = new EventEmitter<number>();
-  question : Question[] = [];
-  questionsComplementary : string[] = [];
+  question: Question[] = [];
+  questionsComplementary: string[] = [];
+  flag!: boolean;
+  selectedScores: { [key: number]: number | null } = {};
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['section']) {
       this.filterComplementary();
+      this.selectedScores = {};
     }
   }
 
-   private filterComplementary() {
+  private filterComplementary() {
     this.questionsComplementary = this.section.questions
       .filter(q => q.isPrincipal === 'N')
       .map(q => q.question);
   }
 
-  getScore(i : number){
-    this.score.emit(i);
+  getScore(questionIndex: number, score: number) {
+    this.selectedScores[questionIndex] = score;
+    this.score.emit(score);
+
+    if (!this.flag) {
+      this.flag = true;
+    } else {
+      this.flag = false;
+    }
   }
 }

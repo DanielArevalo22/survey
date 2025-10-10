@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Question } from '../../models/Question';
 import { Section } from '../../models/Section';
 
@@ -9,43 +9,53 @@ import { Section } from '../../models/Section';
   styleUrl: './principal-question.component.css'
 })
 export class PrincipalQuestionComponent {
-  
+
   @Input()
-  section! : Section
+  section!: Section
   @Input()
-  survey! : string
+  survey!: string
   @Output()
   score = new EventEmitter<number>();
-  question : Question[] = [];
-  principalQ : string = '';
+  question: Question[] = [];
+  principalQ: string = '';
   numeros: number[] = [];
+  selectedScore: number | null = null; // Cambié a null para mejor control
+  flag: boolean = false;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['section']) {
       this.principalQ = this.principal();
       this.numeros = Array.from({ length: 10 }, (_, i) => i + 1);
+      this.selectedScore = null;
+      this.flag = false;
     }
   }
-  
-  ngOnInit(){
+
+  ngOnInit() {
     this.principalQ = this.principal();
     this.numeros = Array.from({ length: 10 }, (_, i) => i + 1);
   }
 
-  principal() : string{
+  principal(): string {
     this.question = this.section.questions;
-    for(let i = 0 ; i < this.question.length; i++){
+    for (let i = 0; i < this.question.length; i++) {
       const isP = this.question[i];
-      if(isP.isPrincipal.match('Y')){
+      if (isP.isPrincipal.match('Y')) {
         return isP.question;
-      }else{
+      } else {
         break;
       }
     }
     return '';
   }
 
-  captureScore(i : number){
+  captureScore(i: number) {
+    this.selectedScore = i;
     this.score.emit(i);
+    if (!this.flag) {
+      this.flag = true;
+    } else {
+      this.flag = false;
+    }
   }
 }
