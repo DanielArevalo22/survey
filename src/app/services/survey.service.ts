@@ -9,7 +9,7 @@ import { Scores } from '../models/Scores';
 })
 export class SurveyService {
 
-  private urlGetSurvey = 'survey-logic-aus-develop.us-east-1.elasticbeanstalk.com/api/v1/survey/getSurvey?service=';
+  private urlGetSurvey = 'http://localhost:6969/api/v1/survey/getSurvey?service=';
   private urlSaveSurvey = 'http://localhost:6969/api/v1/survey/saveSurvey';
 
   constructor(private http: HttpClient) { }
