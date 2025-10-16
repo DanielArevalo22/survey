@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { CompQuestionsComponent } from "./components/comp-questions/comp-questions.component";
 import { PrincipalQuestionComponent } from "./components/principal-question/principal-question.component";
+import { CompletedWindowComponent } from './components/completed-window/completed-window.component';
 import { Survey } from './models/Survey';
 import { SurveyService } from './services/survey.service';
 import { Scores } from './models/Scores';
 
 @Component({
   selector: 'app-root',
-  imports: [PrincipalQuestionComponent, CompQuestionsComponent],
+  imports: [PrincipalQuestionComponent, CompQuestionsComponent, CompletedWindowComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -17,6 +18,8 @@ export class AppComponent {
   currentIndex: number = 0;
   survey!: Survey;
   scoreBody!: Scores;
+  endScore : boolean = false;
+  incomplete : boolean = false;
   private compIndexMap: { [sectionId: number]: number } = {};
 
   constructor(private surveyService: SurveyService) { }
@@ -69,14 +72,15 @@ export class AppComponent {
 
   sendSurvey() {
     const payload = this.scoreBody;
-    this.surveyService.postSurvey(payload).subscribe({
-      next: (res) => {
-        console.log('Status survey ---> ', res);
-      },
-      error : (error) => {
-        console.log('Error saving survey --> ', error);
-      }
-    });
+    this.endScore = true;
+    // this.surveyService.postSurvey(payload).subscribe({
+    //   next: (res) => {
+    //     console.log('Status survey ---> ', res);
+    //   },
+    //   error : (error) => {
+    //     console.log('Error saving survey --> ', error);
+    //   }
+    // });
   }
 
   getScorePrincipal(score: number): void {
@@ -105,8 +109,5 @@ export class AppComponent {
       console.warn(`Ya se asignaron todos los scores en sección ${sectionId}`);
     }
   }
-
-
-
 
 }

@@ -1,4 +1,5 @@
-<div class="w-[500px] h-[550px] rounded-xl mx-auto mt-[25px] shadow flex flex-col">
+@if(!endScore){
+  <div class="w-[500px] h-[550px] rounded-xl mx-auto mt-[25px] shadow flex flex-col">
   <p class="text-[30px] font-thin text-center pt-2" >Hello, {{ this.survey.nameParticipant }} </p>
   @if (survey.sections.length > 0) {
     @let section = survey.sections[currentIndex];
@@ -7,13 +8,15 @@
     <app-principal-question class="mt-1"
       [section]="section" 
       [survey]="survey.nameParticipant"
-      (score) = "getScorePrincipal($event)">
+      (score) = "getScorePrincipal($event)"
+      (click)="incomplete = true">
     </app-principal-question>
 
     <!--COMPONENT QUESTION-->
     <app-comp-questions 
       [section]="section"
-      (score)="getScoreComp($event)">
+      (score)="getScoreComp($event)"
+      (click)="incomplete = true">
     </app-comp-questions>
   }
 
@@ -55,10 +58,14 @@
 
     </div>
   </div>
-  @if(currentIndex > 0){
+  @if(currentIndex > 0 && incomplete){
     <div class="bg-[#d3d3d3]  w-[80px] cursor-pointer text-[20px] mx-auto rounded-xl text-center hover:bg-[#a39e9e] transition duration-500 mb-2"
       (click)="sendSurvey()">
       <a>Send</a>
     </div>
   }
 </div>
+} @else {
+  <app-completed-window></app-completed-window>
+}
+
