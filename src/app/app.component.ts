@@ -73,14 +73,14 @@ export class AppComponent {
   sendSurvey() {
     const payload = this.scoreBody;
     this.endScore = true;
-    // this.surveyService.postSurvey(payload).subscribe({
-    //   next: (res) => {
-    //     console.log('Status survey ---> ', res);
-    //   },
-    //   error : (error) => {
-    //     console.log('Error saving survey --> ', error);
-    //   }
-    // });
+    this.surveyService.postSurvey(payload).subscribe({
+      next: (res) => {
+        console.log('Status survey ---> ', res);
+      },
+      error : (error) => {
+        console.log('Error saving survey --> ', error);
+      }
+    });
   }
 
   getScorePrincipal(score: number): void {
